@@ -1,4 +1,3 @@
-jsx
 import SeoHead from "../components/SeoHead";
 
 export default function PoliticaPrivacidad() {
