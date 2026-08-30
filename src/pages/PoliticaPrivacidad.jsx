@@ -37,7 +37,7 @@ export default function PoliticaPrivacidad() {
           este usuario a este sitio y/o a otros sitios de Internet. Los
           usuarios pueden inhabilitar la publicidad personalizada visitando
           la{" "}
-          <a
+          
             href="https://adssettings.google.com/"
             target="_blank"
             rel="noopener noreferrer"
@@ -59,8 +59,8 @@ export default function PoliticaPrivacidad() {
         <p>
           Puedes ejercer tus derechos de acceso, rectificación, supresión y
           oposición escribiendo a{" "}
-          <a href="mailto:contacto@calculadorasfinanzas.com" className="text-brand-600 hover:underline">
-            contacto@calculadorasfinanzas.com
+          <a href="mailto:admin@invictumeurope.com" className="text-brand-600 hover:underline">
+            admin@invictumeurope.com
           </a>
           .
         </p>

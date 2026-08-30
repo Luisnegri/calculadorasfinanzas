@@ -25,8 +25,8 @@ export default function SobreNosotros() {
           Estamos ampliando el catálogo de calculadoras constantemente. Si
           quieres proponer una nueva calculadora o reportar un error en algún
           cálculo, escríbenos a{" "}
-          <a href="mailto:contacto@calculadorasfinanzas.com" className="text-brand-600 hover:underline">
-            contacto@calculadorasfinanzas.com
+          <a href="mailto:admin@invictumeurope.com" className="text-brand-600 hover:underline">
+            admin@invictumeurope.com
           </a>
           .
         </p>

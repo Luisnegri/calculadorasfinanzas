@@ -7,8 +7,13 @@ export default function AvisoLegal() {
       <h1 className="text-3xl font-bold text-slate-900">Aviso legal</h1>
       <div className="prose mt-6 max-w-2xl space-y-4 text-slate-600">
         <p>
-          <strong>Titular del sitio:</strong> [Completar con nombre/razón
-          social, NIF/CIF y datos de contacto antes de publicar el sitio].
+          <strong>Titular del sitio:</strong> Invictum Europe S.L. — CIF
+          B88357298 — Carrer Riu Millars, 20, 46940 Manises, Valencia, España.
+          Contacto:{" "}
+          <a href="mailto:admin@invictumeurope.com" className="text-brand-600 hover:underline">
+            admin@invictumeurope.com
+          </a>
+          .
         </p>
         <p>
           El acceso y uso de este sitio web atribuye la condición de usuario
