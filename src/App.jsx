@@ -8,6 +8,10 @@ import Amortizacion from "./pages/Amortizacion";
 import Impuestos from "./pages/Impuestos";
 import InteresCompuesto from "./pages/InteresCompuesto";
 import Iva from "./pages/Iva";
+import Ahorro from "./pages/Ahorro";
+import AlquilarVsComprar from "./pages/AlquilarVsComprar";
+import CuotaAutonomo from "./pages/CuotaAutonomo";
+import Finiquito from "./pages/Finiquito";
 import SobreNosotros from "./pages/SobreNosotros";
 import AvisoLegal from "./pages/AvisoLegal";
 import PoliticaPrivacidad from "./pages/PoliticaPrivacidad";
@@ -26,6 +30,10 @@ export default function App() {
         <Route path="/calculadora-impuestos-renta" element={<Impuestos />} />
         <Route path="/calculadora-interes-compuesto" element={<InteresCompuesto />} />
         <Route path="/calculadora-iva" element={<Iva />} />
+        <Route path="/calculadora-ahorro" element={<Ahorro />} />
+        <Route path="/calculadora-alquilar-vs-comprar" element={<AlquilarVsComprar />} />
+        <Route path="/calculadora-cuota-autonomo" element={<CuotaAutonomo />} />
+        <Route path="/calculadora-finiquito" element={<Finiquito />} />
         <Route path="/sobre-nosotros" element={<SobreNosotros />} />
         <Route path="/aviso-legal" element={<AvisoLegal />} />
         <Route path="/politica-privacidad" element={<PoliticaPrivacidad />} />
