@@ -243,3 +243,178 @@ export function calculateVAT(amount, ratePct, mode = "add") {
   return { base: value, vat, total: value + vat };
 }
 
+// --- Ahorro (meta de ahorro) ------------------------------------------------
+/**
+ * Calcula la aportación mensual necesaria para alcanzar una meta de ahorro,
+ * dado un capital inicial y una rentabilidad anual estimada, capitalizando
+ * mensualmente. Es la función inversa de futureValueWithContributions.
+ * @returns {{monthlyContribution:number, alreadyReached:boolean}}
+ */
+export function requiredMonthlyContribution(goalAmount, initialAmount, annualRatePct, years) {
+  const n = Math.round(years * 12);
+  const r = annualRatePct / 100 / 12;
+  if (n <= 0) return { monthlyContribution: 0, alreadyReached: initialAmount >= goalAmount };
+
+  let monthlyContribution;
+  if (r === 0) {
+    monthlyContribution = (goalAmount - initialAmount) / n;
+  } else {
+    const factor = Math.pow(1 + r, n);
+    const futureValueOfInitial = initialAmount * factor;
+    const annuityFactor = (factor - 1) / r;
+    monthlyContribution = (goalAmount - futureValueOfInitial) / annuityFactor;
+  }
+
+  const alreadyReached = monthlyContribution <= 0;
+  return { monthlyContribution: Math.max(0, monthlyContribution), alreadyReached };
+}
+
+// --- Alquilar vs Comprar vivienda -------------------------------------------
+/**
+ * Compara el patrimonio neto acumulado a un horizonte temporal si se compra
+ * una vivienda (con hipoteca) frente a si se alquila y se invierte la
+ * diferencia (entrada + gastos de compra, más el ahorro mensual si alquilar
+ * sale más barato que la cuota+gastos de la compra) a una rentabilidad
+ * alternativa.
+ */
+export function rentVsBuy({
+  price,
+  downPaymentPct,
+  mortgageRatePct,
+  mortgageYears,
+  buyingCostsPct,
+  annualOwnCostsPct,
+  monthlyRent,
+  homeAppreciationPct,
+  altReturnPct,
+  horizonYears,
+}) {
+  const downPayment = price * (downPaymentPct / 100);
+  const loanAmount = Math.max(0, price - downPayment);
+  const buyingCosts = price * (buyingCostsPct / 100);
+  const upfrontCash = downPayment + buyingCosts;
+
+  const mortgage = monthlyPayment(loanAmount, mortgageRatePct, mortgageYears);
+  const monthlyOwnCosts = (price * (annualOwnCostsPct / 100)) / 12;
+  const monthlyOwnTotal = mortgage + monthlyOwnCosts;
+  const monthlyDiff = monthlyOwnTotal - monthlyRent;
+
+  const homeValueAtHorizon = price * Math.pow(1 + homeAppreciationPct / 100, horizonYears);
+  let remainingDebt = 0;
+  if (horizonYears < mortgageYears && loanAmount > 0) {
+    const { schedule } = amortizationSchedule(loanAmount, mortgageRatePct, mortgageYears);
+    const monthIndex = Math.min(schedule.length, Math.round(horizonYears * 12)) - 1;
+    remainingDebt = schedule[monthIndex] ? schedule[monthIndex].balance : 0;
+  }
+  const buyerEquity = homeValueAtHorizon - remainingDebt;
+
+  const projection = futureValueWithContributions(upfrontCash, monthlyDiff, altReturnPct, horizonYears);
+  const renterWealth = projection.finalBalance;
+
+  return {
+    downPayment,
+    loanAmount,
+    buyingCosts,
+    upfrontCash,
+    mortgage,
+    monthlyOwnCosts,
+    monthlyOwnTotal,
+    monthlyDiff,
+    homeValueAtHorizon,
+    remainingDebt,
+    buyerEquity,
+    renterWealth,
+    difference: buyerEquity - renterWealth,
+  };
+}
+
+// --- Cuota de autónomo (RETA, España) ---------------------------------------
+// Tramos de rendimientos netos mensuales y cuota mínima mensual 2026,
+// contrastados con varias fuentes especializadas (orientativo, la cuota real
+// puede variar si se elige voluntariamente una base superior a la mínima del
+// tramo). Tipo de cotización conjunto ≈ 30,50% (contingencias comunes +
+// contingencias profesionales + cese de actividad + formación + MEI).
+export const RETA_BRACKETS_2026 = [
+  { upTo: 670, quota: 200 },
+  { upTo: 900, quota: 220 },
+  { upTo: 1166.7, quota: 260 },
+  { upTo: 1300, quota: 275 },
+  { upTo: 1500, quota: 291 },
+  { upTo: 1700, quota: 294 },
+  { upTo: 1850, quota: 350 },
+  { upTo: 2030, quota: 370 },
+  { upTo: 2330, quota: 390 },
+  { upTo: 2760, quota: 415 },
+  { upTo: 3190, quota: 440 },
+  { upTo: 3620, quota: 465 },
+  { upTo: 4050, quota: 490 },
+  { upTo: 6000, quota: 530 },
+  { upTo: Infinity, quota: 590 },
+];
+
+// Tarifa plana para nuevos autónomos: cuota fija durante los primeros 12
+// meses de alta (ampliable a otros 12 más si los rendimientos netos siguen
+// por debajo del SMI), con independencia de los rendimientos reales.
+export const RETA_FLAT_RATE = 80;
+
+/**
+ * Estima la cuota mensual de autónomo a partir de los rendimientos netos
+ * mensuales, según los tramos RETA 2026 (o la tarifa plana si aplica).
+ * @returns {{quota:number, bracketMin:number, bracketMax:number, isFlatRate:boolean}}
+ */
+export function estimateAutonomoQuota(netMonthlyIncome, { flatRate = false } = {}) {
+  if (flatRate) {
+    return { quota: RETA_FLAT_RATE, bracketMin: null, bracketMax: null, isFlatRate: true };
+  }
+  let lower = 0;
+  const bracket =
+    RETA_BRACKETS_2026.find((b) => netMonthlyIncome <= b.upTo) || RETA_BRACKETS_2026[RETA_BRACKETS_2026.length - 1];
+  const idx = RETA_BRACKETS_2026.indexOf(bracket);
+  lower = idx > 0 ? RETA_BRACKETS_2026[idx - 1].upTo : 0;
+  return { quota: bracket.quota, bracketMin: lower, bracketMax: bracket.upTo, isFlatRate: false };
+}
+
+// --- Finiquito ---------------------------------------------------------------
+// Reglas de indemnización simplificadas (orientativas): no contemplan
+// particularidades de convenios colectivos ni contratos anteriores a la
+// reforma laboral de 2012.
+export const SETTLEMENT_TERMINATION_TYPES = {
+  voluntaria: { label: "Baja voluntaria", daysPerYear: 0, capMonths: null },
+  temporal: { label: "Fin de contrato temporal", daysPerYear: 12, capMonths: null },
+  objetivo: { label: "Despido procedente / causas objetivas", daysPerYear: 20, capMonths: 12 },
+  improcedente: { label: "Despido improcedente", daysPerYear: 33, capMonths: 24 },
+};
+
+/**
+ * Calcula el finiquito: parte proporcional del salario, vacaciones no
+ * disfrutadas, parte proporcional de pagas extra, e indemnización por fin de
+ * contrato o despido (si corresponde según el tipo).
+ */
+export function calculateSettlement({
+  monthlyGross,
+  paymentsPerYear,
+  pendingDays,
+  vacationDays,
+  extraProrationMonths,
+  terminationType,
+  yearsWorked,
+}) {
+  const dailySalary = (monthlyGross * paymentsPerYear) / 365;
+  const pendingSalary = dailySalary * pendingDays;
+  const vacationPay = dailySalary * vacationDays;
+
+  const numberOfExtras = Math.max(0, paymentsPerYear - 12);
+  const extraProrated = numberOfExtras > 0 ? monthlyGross * numberOfExtras * (extraProrationMonths / 12) : 0;
+
+  const rule = SETTLEMENT_TERMINATION_TYPES[terminationType] || SETTLEMENT_TERMINATION_TYPES.voluntaria;
+  const severanceDays = rule.daysPerYear * Math.max(0, yearsWorked);
+  let severanceAmount = dailySalary * severanceDays;
+  if (rule.capMonths) {
+    severanceAmount = Math.min(severanceAmount, monthlyGross * rule.capMonths);
+  }
+
+  const total = pendingSalary + vacationPay + extraProrated + severanceAmount;
+
+  return { dailySalary, pendingSalary, vacationPay, extraProrated, severanceDays, severanceAmount, total };
+}
+
