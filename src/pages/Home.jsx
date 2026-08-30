@@ -1,7 +1,18 @@
+﻿import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
-import SeoHead from "../components/SeoHead";
+import SeoHead, { SITE_NAME, SITE_URL } from "../components/SeoHead";
 import AdSlot from "../components/AdSlot";
 import { CALCULATORS } from "../lib/calculators";
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: SITE_NAME,
+  url: SITE_URL,
+  description:
+    "Calculadoras financieras online gratis: hipoteca, salario neto, ROI de inversión, amortización de crédito e impuestos.",
+  inLanguage: "es-ES",
+};
 
 export default function Home() {
   return (
@@ -11,6 +22,9 @@ export default function Home() {
         description="Calculadoras financieras online gratis: hipoteca, salario neto, ROI de inversión, amortización de crédito e impuestos. Resultados instantáneos, sin registro."
         path="/"
       />
+      <Helmet>
+        <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
+      </Helmet>
 
       <section className="text-center">
         <h1 className="text-4xl font-bold text-slate-900 sm:text-5xl">

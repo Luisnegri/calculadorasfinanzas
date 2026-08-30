@@ -1,11 +1,43 @@
-import SeoHead from "./SeoHead";
+﻿import { Helmet } from "react-helmet-async";
+import SeoHead, { SITE_URL } from "./SeoHead";
 import AdSlot from "./AdSlot";
 import AffiliateBox from "./AffiliateBox";
 
 export default function CalculatorLayout({ calc, intro, children, faq }) {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebApplication",
+        name: calc.name,
+        url: `${SITE_URL}${calc.path}`,
+        description: calc.description,
+        applicationCategory: "FinanceApplication",
+        operatingSystem: "Any (navegador web)",
+        offers: { "@type": "Offer", price: "0", priceCurrency: "EUR" },
+        inLanguage: "es-ES",
+      },
+      ...(faq && faq.length > 0
+        ? [
+            {
+              "@type": "FAQPage",
+              mainEntity: faq.map((item) => ({
+                "@type": "Question",
+                name: item.q,
+                acceptedAnswer: { "@type": "Answer", text: item.a },
+              })),
+            },
+          ]
+        : []),
+    ],
+  };
+
   return (
     <>
       <SeoHead title={calc.name} description={calc.description} path={calc.path} />
+      <Helmet>
+        <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
+      </Helmet>
 
       <nav className="mb-4 text-xs text-slate-400">
         <span>Inicio</span> <span className="mx-1">/</span> <span>{calc.shortName}</span>
