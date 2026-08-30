@@ -1,3 +1,4 @@
+jsx
 import SeoHead from "../components/SeoHead";
 
 export default function PoliticaPrivacidad() {
@@ -37,12 +38,7 @@ export default function PoliticaPrivacidad() {
           este usuario a este sitio y/o a otros sitios de Internet. Los
           usuarios pueden inhabilitar la publicidad personalizada visitando
           la{" "}
-          
-            href="https://adssettings.google.com/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-brand-600 hover:underline"
-          >
+          <a href="https://adssettings.google.com/" target="_blank" rel="noopener noreferrer" className="text-brand-600 hover:underline">
             Configuración de anuncios de Google
           </a>
           .
