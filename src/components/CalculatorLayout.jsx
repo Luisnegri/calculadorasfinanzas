@@ -3,7 +3,7 @@ import SeoHead, { SITE_URL } from "./SeoHead";
 import AdSlot from "./AdSlot";
 import AffiliateBox from "./AffiliateBox";
 
-export default function CalculatorLayout({ calc, intro, children, faq }) {
+export default function CalculatorLayout({ calc, intro, children, faq, content }) {
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
@@ -61,6 +61,8 @@ export default function CalculatorLayout({ calc, intro, children, faq }) {
       <div className="mt-10">
         <AdSlot slotId="bottom-of-calculator" format="horizontal" label="Espacio publicitario" />
       </div>
+
+      {content ? <section className="mt-12 max-w-3xl">{content}</section> : null}
 
       {faq && faq.length > 0 ? (
         <section className="mt-12 max-w-3xl">

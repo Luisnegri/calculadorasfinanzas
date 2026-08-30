@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+﻿import { useMemo, useState } from "react";
 import CalculatorLayout from "../components/CalculatorLayout";
 import Field from "../components/Field";
 import ResultStat from "../components/ResultStat";
@@ -44,7 +44,49 @@ export default function Hipoteca() {
           q: "¿Cuánta entrada necesito para una hipoteca?",
           a: "Los bancos suelen financiar hasta el 80% del valor de tasación o compra, por lo que necesitarás al menos un 20% de entrada más los gastos de compraventa (impuestos, notaría, registro).",
         },
+        {
+          q: "¿Hipoteca a tipo fijo o variable: cuál me conviene?",
+          a: "La fija te da una cuota estable durante toda la vida del préstamo, útil si prefieres previsibilidad. La variable (ligada al Euríbor + diferencial) suele partir con un interés más bajo, pero tu cuota puede subir o bajar según el mercado. La mixta combina un periodo inicial fijo y después variable.",
+        },
+        {
+          q: "¿Puedo amortizar mi hipoteca antes de tiempo?",
+          a: "Sí. Puedes hacer amortizaciones parciales (para reducir cuota o plazo) o cancelar el préstamo por completo. Desde 2019 la ley limita las comisiones por amortización anticipada al 2% el primer año y al 1,5% después en hipotecas a tipo fijo (0,25%/0,15% en variable), y en muchos casos ya no se cobran.",
+        },
+        {
+          q: "¿Qué otros gastos debo sumar al comprar una vivienda con hipoteca?",
+          a: "Además de la entrada, cuenta con tasación, notaría, registro de la propiedad, gestoría y el Impuesto de Transmisiones Patrimoniales (en vivienda de segunda mano) o el IVA (en obra nueva). Desde 2018 el banco asume el Impuesto de Actos Jurídicos Documentados.",
+        },
       ]}
+      content={
+        <>
+          <h2 className="mb-3 text-xl font-bold text-slate-900">Cómo interpretar estos resultados</h2>
+          <p className="leading-relaxed text-slate-600">
+            La cuota mensual es lo que pagarás cada mes durante todo el plazo si el tipo de interés se mantiene
+            constante. Los intereses totales son el coste real de financiarte: cuanto más largo el plazo, más
+            interés total pagarás aunque la cuota sea menor. La tabla de amortización te muestra, año a año, qué
+            parte de cada cuota reduce el capital pendiente y qué parte es coste financiero — al principio la
+            mayoría es interés, y esa proporción se invierte con el tiempo.
+          </p>
+          <h2 className="mb-3 mt-8 text-xl font-bold text-slate-900">3 formas de pagar menos por tu hipoteca</h2>
+          <ul className="list-disc space-y-2 pl-5 text-slate-600">
+            <li>
+              <strong className="text-slate-800">Compara varias ofertas antes de firmar.</strong> Un TIN medio
+              punto más bajo puede suponer miles de euros de diferencia en el total pagado a 30 años.
+            </li>
+            <li>
+              <strong className="text-slate-800">Amortiza capital en cuanto puedas.</strong> Cada euro que
+              adelantas deja de generar intereses el resto del plazo — es la forma más directa de reducir el
+              coste total.
+            </li>
+            <li>
+              <strong className="text-slate-800">
+                Si puedes asumir una cuota mayor, acorta el plazo en vez de solo bajar la cuota.
+              </strong>{" "}
+              Un plazo más corto reduce mucho los intereses totales, aunque la cuota mensual sea más alta.
+            </li>
+          </ul>
+        </>
+      }
     >
       <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
         <div className="grid gap-4 sm:grid-cols-2">

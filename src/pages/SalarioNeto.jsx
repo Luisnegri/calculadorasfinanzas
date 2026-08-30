@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+﻿import { useMemo, useState } from "react";
 import CalculatorLayout from "../components/CalculatorLayout";
 import Field from "../components/Field";
 import ResultStat from "../components/ResultStat";
@@ -34,7 +34,47 @@ export default function SalarioNeto() {
           q: "¿Es exacta esta estimación?",
           a: "Es una aproximación general (régimen general, sin hijos ni reducciones específicas, sin particularidades autonómicas). Tu nómina real puede variar según tu comunidad autónoma, situación familiar y convenio.",
         },
+        {
+          q: "¿Qué conceptos incluye la cotización a la Seguridad Social del trabajador?",
+          a: "En el régimen general, el trabajador aporta alrededor de un 6,35% de su base de cotización, que cubre contingencias comunes, desempleo, formación profesional y el mecanismo de equidad intergeneracional (MEI). El resto de la cotización lo paga la empresa.",
+        },
+        {
+          q: "¿Por qué me retienen menos IRPF en nómina del que luego pago en la Renta?",
+          a: "La retención en nómina es un pago a cuenta calculado con estimaciones (situación familiar, tipo de contrato, etc.). El importe real de IRPF se ajusta al presentar la declaración de la Renta, donde puede salir a pagar o a devolver según cómo de ajustada estuviera la retención.",
+        },
+        {
+          q: "¿Esta calculadora sirve para autónomos?",
+          a: "No. Está pensada para trabajadores por cuenta ajena (régimen general). Los autónomos cotizan por bases distintas, elegidas dentro de unos tramos, y tienen otras reglas de IRPF con pagos fraccionados trimestrales.",
+        },
       ]}
+      content={
+        <>
+          <h2 className="mb-3 text-xl font-bold text-slate-900">Cómo interpretar tu salario neto</h2>
+          <p className="leading-relaxed text-slate-600">
+            El bruto es el importe pactado en tu contrato o convenio; el neto es lo que realmente ingresas. La
+            diferencia se reparte entre la cotización a la Seguridad Social —con un tope máximo mensual, así que a
+            partir de cierto salario ese descuento deja de crecer al mismo ritmo— y la retención de IRPF, que
+            depende de tu tramo de renta y de tu situación personal y familiar.
+          </p>
+          <h2 className="mb-3 mt-8 text-xl font-bold text-slate-900">
+            Qué tener en cuenta al comparar ofertas de trabajo
+          </h2>
+          <ul className="list-disc space-y-2 pl-5 text-slate-600">
+            <li>
+              <strong className="text-slate-800">Compara siempre en bruto anual</strong>, no en un "neto mensual"
+              que te digan de palabra: el neto depende de tus pagas, tu situación familiar y tu comunidad autónoma.
+            </li>
+            <li>
+              <strong className="text-slate-800">12 o 14 pagas no cambian lo que cobras al año</strong>, solo cómo
+              se reparte — aunque sí cambia tu liquidez mes a mes.
+            </li>
+            <li>
+              <strong className="text-slate-800">Revisa qué incluye el bruto:</strong> salario base,
+              complementos, y si las pagas extra están prorrateadas o se cobran aparte.
+            </li>
+          </ul>
+        </>
+      }
     >
       <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
         <div className="grid gap-4 sm:grid-cols-2">
