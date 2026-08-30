@@ -20,11 +20,11 @@ export default function SalarioNeto() {
   return (
     <CalculatorLayout
       calc={calc}
-      intro="Introduce tu salario bruto anual y estima cuánto cobrarás neto, descontando la cotización a la Seguridad Social y el IRPF."
+      intro="Introduce tu sueldo bruto anual y estima cuánto cobrarás neto en tu nómina, descontando la cotización a la Seguridad Social y el IRPF."
       faq={[
         {
-          q: "¿Qué diferencia hay entre salario bruto y neto?",
-          a: "El salario bruto es el total pactado en tu contrato antes de deducciones. El neto es lo que realmente recibes en tu cuenta, tras descontar la Seguridad Social a cargo del trabajador y las retenciones de IRPF.",
+          q: "¿Qué diferencia hay entre sueldo bruto y neto?",
+          a: "El sueldo (o salario) bruto es el total pactado en tu contrato antes de deducciones. El neto es lo que realmente recibes en tu cuenta —lo que verás como líquido a percibir en tu nómina—, tras descontar la Seguridad Social a cargo del trabajador y las retenciones de IRPF.",
         },
         {
           q: "¿Por qué 12 o 14 pagas cambia el resultado mensual?",
@@ -49,12 +49,13 @@ export default function SalarioNeto() {
       ]}
       content={
         <>
-          <h2 className="mb-3 text-xl font-bold text-slate-900">Cómo interpretar tu salario neto</h2>
+          <h2 className="mb-3 text-xl font-bold text-slate-900">Cómo interpretar tu sueldo neto</h2>
           <p className="leading-relaxed text-slate-600">
-            El bruto es el importe pactado en tu contrato o convenio; el neto es lo que realmente ingresas. La
-            diferencia se reparte entre la cotización a la Seguridad Social —con un tope máximo mensual, así que a
-            partir de cierto salario ese descuento deja de crecer al mismo ritmo— y la retención de IRPF, que
-            depende de tu tramo de renta y de tu situación personal y familiar.
+            El bruto es el importe pactado en tu contrato o convenio; el neto es lo que realmente ingresas, lo que
+            verás reflejado como líquido a percibir en tu nómina. La diferencia se reparte entre la cotización a
+            la Seguridad Social —con un tope máximo mensual, así que a partir de cierto sueldo ese descuento deja
+            de crecer al mismo ritmo— y la retención de IRPF, que depende de tu tramo de renta y de tu situación
+            personal y familiar.
           </p>
           <h2 className="mb-3 mt-8 text-xl font-bold text-slate-900">
             Qué tener en cuenta al comparar ofertas de trabajo
@@ -78,7 +79,7 @@ export default function SalarioNeto() {
     >
       <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
         <div className="grid gap-4 sm:grid-cols-2">
-          <Field label="Salario bruto anual" unit="€" value={bruto} min={0} step={500} onChange={setBruto} />
+          <Field label="Sueldo bruto anual" unit="€" value={bruto} min={0} step={500} onChange={setBruto} />
           <Field label="Número de pagas" unit="pagas/año" value={pagas} min={12} max={14} step={1} onChange={setPagas} />
         </div>
 
@@ -120,7 +121,7 @@ export default function SalarioNeto() {
             </div>
           </>
         ) : (
-          <p className="mt-6 text-sm text-slate-500">Introduce un salario bruto válido para ver el resultado.</p>
+          <p className="mt-6 text-sm text-slate-500">Introduce un sueldo bruto válido para ver el resultado.</p>
         )}
       </div>
     </CalculatorLayout>

@@ -1,4 +1,4 @@
-// Registro central de calculadoras: una única fuente de verdad para nav,
+﻿// Registro central de calculadoras: una única fuente de verdad para nav,
 // home, sitemap y metadatos SEO.
 export const CALCULATORS = [
   {
@@ -14,10 +14,10 @@ export const CALCULATORS = [
   {
     slug: "calculadora-salario-neto",
     path: "/calculadora-salario-neto",
-    name: "Calculadora de Salario Neto",
-    shortName: "Salario Neto",
-    description: "Convierte tu salario bruto anual en neto: Seguridad Social, IRPF estimado y cuánto recibes cada mes.",
-    keyword: "calcular salario neto",
+    name: "Calculadora de Sueldo Neto",
+    shortName: "Sueldo Neto",
+    description: "Convierte tu sueldo bruto anual en neto: Seguridad Social, IRPF estimado y cuánto recibes cada mes en tu nómina.",
+    keyword: "calculadora de sueldo neto",
     category: "impuestos",
     icon: "wallet",
   },

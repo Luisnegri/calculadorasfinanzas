@@ -10,7 +10,7 @@ const jsonLd = {
   name: SITE_NAME,
   url: SITE_URL,
   description:
-    "Calculadoras financieras online gratis: hipoteca, salario neto, ROI de inversión, amortización de crédito e impuestos.",
+    "Calculadoras financieras online gratis: hipoteca, sueldo neto, ROI de inversión, amortización de crédito e impuestos.",
   inLanguage: "es-ES",
 };
 
@@ -19,7 +19,7 @@ export default function Home() {
     <>
       <SeoHead
         title="Calculadoras Financieras Online Gratis"
-        description="Calculadoras financieras online gratis: hipoteca, salario neto, ROI de inversión, amortización de crédito e impuestos. Resultados instantáneos, sin registro."
+        description="Calculadoras financieras online gratis: hipoteca, sueldo neto, ROI de inversión, amortización de crédito e impuestos. Resultados instantáneos, sin registro."
         path="/"
       />
       <Helmet>
@@ -31,7 +31,7 @@ export default function Home() {
           Calculadoras financieras <span className="text-brand-600">claras y gratuitas</span>
         </h1>
         <p className="mx-auto mt-4 max-w-2xl text-lg text-slate-600">
-          Hipoteca, salario neto, inversión, crédito e impuestos: resuelve tus
+          Hipoteca, sueldo neto, inversión, crédito e impuestos: resuelve tus
           cuentas en segundos, sin registro y sin complicaciones.
         </p>
       </section>
