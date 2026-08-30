@@ -51,8 +51,29 @@ export const CALCULATORS = [
     category: "impuestos",
     icon: "receipt",
   },
+  {
+    slug: "calculadora-interes-compuesto",
+    path: "/calculadora-interes-compuesto",
+    name: "Calculadora de Interés Compuesto",
+    shortName: "Interés Compuesto",
+    description: "Calcula cómo crece tu dinero con interés compuesto: capital inicial, aportaciones mensuales y rentabilidad anual.",
+    keyword: "calculadora de interés compuesto",
+    category: "inversion",
+    icon: "percent",
+  },
+  {
+    slug: "calculadora-iva",
+    path: "/calculadora-iva",
+    name: "Calculadora de IVA",
+    shortName: "IVA",
+    description: "Calcula el IVA de cualquier importe: añade el IVA a un precio sin impuestos o extrae la base de un precio final.",
+    keyword: "calculadora de iva",
+    category: "impuestos",
+    icon: "receipt",
+  },
 ];
 
 export function getCalculatorByPath(path) {
   return CALCULATORS.find((c) => c.path === path);
 }
+

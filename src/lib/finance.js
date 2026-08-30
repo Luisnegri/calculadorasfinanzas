@@ -1,4 +1,4 @@
-// Funciones puras de cálculo financiero.
+﻿// Funciones puras de cálculo financiero.
 // Todas devuelven números "crudos" (sin formatear) para facilitar pruebas unitarias.
 
 /**
@@ -215,3 +215,31 @@ export function netSalaryFromGross(annualGross, paymentsPerYear = 14) {
     paymentsPerYear,
   };
 }
+
+// --- IVA (España) ----------------------------------------------------------
+export const VAT_RATES = [
+  { label: "General (21%)", value: 21 },
+  { label: "Reducido (10%)", value: 10 },
+  { label: "Superreducido (4%)", value: 4 },
+];
+
+/**
+ * Calcula el desglose de IVA de un importe.
+ * @param {number} amount - Importe introducido.
+ * @param {number} ratePct - Tipo de IVA en % (ej. 21).
+ * @param {"add"|"remove"} mode - "add": el importe es la base (sin IVA) y se
+ *   calcula el total con IVA. "remove": el importe es el total (con IVA
+ *   incluido) y se extrae la base y la cuota de IVA.
+ * @returns {{base:number, vat:number, total:number}}
+ */
+export function calculateVAT(amount, ratePct, mode = "add") {
+  const rate = (ratePct || 0) / 100;
+  const value = Math.max(0, amount || 0);
+  if (mode === "remove") {
+    const base = value / (1 + rate);
+    return { base, vat: value - base, total: value };
+  }
+  const vat = value * rate;
+  return { base: value, vat, total: value + vat };
+}
+
