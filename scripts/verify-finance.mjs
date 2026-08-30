@@ -1,4 +1,4 @@
-// Script de verificación manual (no es un test runner formal): compara los
+﻿// Script de verificación manual (no es un test runner formal): compara los
 // resultados de src/lib/finance.js contra valores calculados de forma
 // independiente para varios casos conocidos.
 import {
@@ -10,6 +10,7 @@ import {
   estimateIncomeTax,
   socialSecurityEmployeeContribution,
   netSalaryFromGross,
+  calculateVAT,
 } from "../src/lib/finance.js";
 
 let failures = 0;
@@ -91,5 +92,22 @@ console.log("\n--- Seguridad Social / salario neto ---");
   check("netSalary: 14 payments sum to annual net", net.netPerPayment * 14, net.annualNet, 0.01);
 }
 
+console.log("\n--- IVA ---");
+{
+  // Añadir IVA: 100 al 21% -> base 100, cuota 21, total 121
+  const v = calculateVAT(100, 21, "add");
+  check("calculateVAT add: base", v.base, 100, 0.001);
+  check("calculateVAT add: vat", v.vat, 21, 0.001);
+  check("calculateVAT add: total", v.total, 121, 0.001);
+}
+{
+  // Extraer IVA: 121 con IVA del 21% -> base 100, cuota 21
+  const v = calculateVAT(121, 21, "remove");
+  check("calculateVAT remove: base", v.base, 100, 0.001);
+  check("calculateVAT remove: vat", v.vat, 21, 0.001);
+  check("calculateVAT remove: total", v.total, 121, 0.001);
+}
+
 console.log(`\n${failures === 0 ? "TODOS LOS CHECKS PASARON" : `${failures} CHECK(S) FALLARON`}`);
 process.exit(failures === 0 ? 0 : 1);
+

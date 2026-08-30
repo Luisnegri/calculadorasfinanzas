@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+﻿import { Route, Routes } from "react-router-dom";
 import Layout from "./components/Layout";
 import Home from "./pages/Home";
 import Hipoteca from "./pages/Hipoteca";
@@ -6,6 +6,8 @@ import SalarioNeto from "./pages/SalarioNeto";
 import Roi from "./pages/Roi";
 import Amortizacion from "./pages/Amortizacion";
 import Impuestos from "./pages/Impuestos";
+import InteresCompuesto from "./pages/InteresCompuesto";
+import Iva from "./pages/Iva";
 import SobreNosotros from "./pages/SobreNosotros";
 import AvisoLegal from "./pages/AvisoLegal";
 import PoliticaPrivacidad from "./pages/PoliticaPrivacidad";
@@ -22,6 +24,8 @@ export default function App() {
         <Route path="/calculadora-roi-inversion" element={<Roi />} />
         <Route path="/amortizacion-credito" element={<Amortizacion />} />
         <Route path="/calculadora-impuestos-renta" element={<Impuestos />} />
+        <Route path="/calculadora-interes-compuesto" element={<InteresCompuesto />} />
+        <Route path="/calculadora-iva" element={<Iva />} />
         <Route path="/sobre-nosotros" element={<SobreNosotros />} />
         <Route path="/aviso-legal" element={<AvisoLegal />} />
         <Route path="/politica-privacidad" element={<PoliticaPrivacidad />} />
@@ -31,3 +35,4 @@ export default function App() {
     </Layout>
   );
 }
+
